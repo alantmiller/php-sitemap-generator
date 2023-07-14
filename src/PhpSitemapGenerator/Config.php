@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpSitemapGenerator;
+namespace alantmiller\PhpSitemapGenerator;
 
 class Config  
 {
