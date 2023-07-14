@@ -1,6 +1,8 @@
 <?php 
 
-class Shared_Xml_Sitemap_Config
+namespace PhpSitemapGenerator;
+
+class Config {
 {
     private $_domain;
     private $_path;
