@@ -7,13 +7,10 @@ class Generator
   // Properties
   
   private Config $_config;
-  
   private string $_xml;
-  
   private string $_blocks;
 
   // Constructor 
-  
   public function __construct(Config $config)
   {
     $this->_config = $config;
