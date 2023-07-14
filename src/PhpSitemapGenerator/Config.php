@@ -1,6 +1,4 @@
 <?php 
-// src/PhpSitemapGenerator/Config.php  
-
 // src/PhpSitemapGenerator/Config.php
 
 namespace PhpSitemapGenerator;
