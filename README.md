@@ -39,8 +39,9 @@ for($i = 0; $i < 8; $i++) {
 
   $dateTime = new DateTime("+$i days");  
   $page = "/page$i";
+  $priority = mt_rand(10, 20) / 10;
   
-  $sitemap->addEntry($page, 0.5, 'monthly', $dateTime);
+  $sitemap->addEntry($page, $priority, 'monthly', $dateTime);
 }
 
 // Generate
