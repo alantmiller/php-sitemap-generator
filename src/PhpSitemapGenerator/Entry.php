@@ -1,126 +1,199 @@
 <?php 
-// src/PhpSitemapGenerator/Entry.php  
+<?php
 
 namespace PhpSitemapGenerator;
 
+/**
+ * Class Entry
+ *
+ * @package PhpSitemapGenerator 
+ */
 class Entry
 {
-    private $_loc;
-    private $_priority;
-    private $_changefreq;
-    private $_lastmod;
 
-    private $_frequencies = array('always','hourly','daily','weekly','monthly','yearly','never');
-    private $_priorities = array('0.0','0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0');
+  private string $_loc;
+  private string $_priority;
+  private string $_changefreq;
+  private string $_lastmod;
 
-    public function __construct($loc, $priority, $changefreq="", $lastmod='')
-    {
-        $this->_setLoc($loc);
-        $this->_setPriority($priority);
+  private array $_frequencies = ['always','hourly','daily','weekly','monthly','yearly','never'];
 
-        if (strlen($changefreq)> 0) {
-            $this->_setChangefreq($changefreq);
-        }
-        if (strlen($lastmod)> 0) {
-            $this->_setLastmod($lastmod);
-        }
+  private array $_priorities = ['0.0','0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0'];
+
+  /**
+   * Constructor
+   *
+   * @param string $loc
+   * @param string $priority
+   * @param string $changefreq
+   * @param string $lastmod 
+   */
+  public function __construct(
+      string $loc,
+      string $priority,
+      string $changefreq = "",
+      string $lastmod = ""
+  )
+  {
+    $this->_setLoc($loc);
+    $this->_setPriority($priority);
+
+    if (strlen($changefreq) > 0) {
+      $this->_setChangefreq($changefreq);
     }
 
-    public function get($arg)
-    {
-        switch($arg)
-        {
-            case 'loc':
-                return $this->_getLoc();
-            case 'priority':
-                return $this->_getPriority();
-            case 'changefreq':
-                return $this->_getChangefreq();
-            case 'lastmod':
-                return $this->_getLastmod();
-            case 'frequencies':
-                return $this->_frequencies;
-            case 'priorities':
-                return $this->_priorities;
-            default:
-                throw new Exception('get() method in class: '.__CLASS__.' did not recognize the argument');
-        }
+    if (strlen($lastmod) > 0) {
+      $this->_setLastmod($lastmod);
     }
 
-    private function _setLoc($loc)
-    {
-        $this->_loc = $loc;
-        return $this;
+  }
+
+  /**
+   * Get property
+   * 
+   * @param string $arg
+   *
+   * @return string|array
+   */
+  public function get(string $arg): string|array
+  {
+    switch($arg) {
+      case 'loc':
+        return $this->_getLoc();
+      case 'priority':  
+        return $this->_getPriority();
+      case 'changefreq':
+        return $this->_getChangefreq();
+      case 'lastmod':
+        return $this->_getLastmod();
+      case 'frequencies':
+        return $this->_frequencies;
+      case 'priorities':
+        return $this->_priorities;
+      default:
+        throw new \Exception('Invalid argument');  
+    }
+  }
+
+  /**
+   * Set location
+   *
+   * @param string $loc 
+   * 
+   * @return self
+   */
+  private function _setLoc(string $loc): self
+  {
+    $this->_loc = $loc;
+    return $this;
+  }
+
+  /**
+   * Set priority
+   *
+   * @param string $priority
+   *  
+   * @return self
+   * @throws \Exception
+   */
+  private function _setPriority(string $priority): self
+  {
+    if (!in_array($priority, $this->_priorities)) {
+      throw new \Exception('Invalid priority value');
+    }
+    
+    $this->_priority = $priority;
+    return $this;
+  }
+
+  /**
+   * Set change frequency
+   *
+   * @param string $changefreq
+   * 
+   * @return self
+   * @throws \Exception
+   */
+  private function _setChangefreq(string $changefreq): self
+  {
+    if (!in_array($changefreq, $this->_frequencies)) {
+      throw new \Exception('Invalid changefreq');
+    }
+    
+    $this->_changefreq = $changefreq;
+    return $this; 
+  }
+
+  /**
+   * Set last modified
+   *
+   * @param string $lastmod
+   * 
+   * @return self
+   * @throws \Exception
+   */
+  private function _setLastmod(string $lastmod): self
+  {
+    $date = \DateTime::createFromFormat('Y-m-d', $lastmod);
+
+    if (!$date) {
+      throw new \Exception('Invalid date format');
     }
 
-    private function _setPriority($priority)
-    {
-        $priority = trim($priority);
-        
-        if (!in_array($priority, $this->_priorities)) {
-            throw new Exception('setPriority() method is expecting a value between 0.0 and 1.0');
-        } else {
-            $this->_priority = $priority;
-        }
-        return $this;
+    $this->_lastmod = $lastmod;
+    return $this;
+  }
+
+  /**
+   * Get location
+   *
+   * @return string
+   */
+  private function _getLoc(): string
+  {
+    return $this->_loc;
+  }
+
+  /**
+   * Get priority
+   *
+   * @return string 
+   */
+  private function _getPriority(): string
+  {
+    if (empty($this->_priority)) {
+      return '0.5';
     }
 
-    private function _setChangefreq($changefreq)
-    {
-        $changefreq = strtolower(trim($changefreq));
+    return $this->_priority;
+  }
 
-        if (!in_array($changefreq, $this->_frequencies)) {
-            throw new Exception('setChangefreq() method is expecting a value such as hourly daily, weekly etc');
-        } else {
-            $this->_changefreq = $changefreq;
-        }
-        return $this;
+  /**
+   * Get change frequency
+   *
+   * @return string
+   */
+  private function _getChangefreq(): string
+  {
+    if (empty($this->_changefreq)) {
+      return 'monthly';
     }
 
-    private function _setLastmod($lastmod)
-    {
-        $arr = date_parse($lastmod);
-        if (!checkdate($arr['month'], $arr['day'], $arr['year'])) {
-            throw new Exception('setLastmod() method expects a valid date');
-        } else {
-            $arr['month'] = str_pad($arr['month'], 2, "0", STR_PAD_LEFT);
-            $arr['day'] = str_pad($arr['day'], 2, "0", STR_PAD_LEFT);
-            $this->_lastmod =
-                sprintf('%s-%s-%s',$arr['year'], $arr['month'], $arr['day']);
-        }
-        return $this;
+    return $this->_changefreq;
+  }
+
+  /**
+   * Get last modified
+   *
+   * @return string
+   */
+  private function _getLastmod(): string 
+  {
+    if (empty($this->_lastmod)) {
+      return date('Y-m-d');  
     }
 
-    private function _getLoc()
-    {
-        return $this->_loc;
-    }
+    return $this->_lastmod;
+  }
 
-    private function _getPriority()
-    {
-        if (!strlen($this->_priority) > 0) {
-            return  '0.5';
-        } else {
-            return $this->_priority;
-        }
-    }
-
-    private function _getLastmod()
-    {
-        // set default values
-        if (!strlen($this->_lastmod) > 0) {
-             return date('Y-m-d');
-        } else {
-            return $this->_lastmod;
-        }
-    }
-
-    private function _getChangefreq()
-    {
-        if (!strlen($this->_changefreq) > 0) {
-            return 'monthly';
-        } else {
-            return $this->_changefreq;
-        }
-    }
 }
