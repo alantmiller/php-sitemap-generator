@@ -19,15 +19,16 @@ $config->setFilename('sitemap.xml');
 // Sitemap
 $sitemap = new Sitemap($config);
 
-// Add entries
-$sitemap->addEntry('/page1', '0.8');
-$sitemap->addEntry('/page2', '0.5');
+$dateTime = new DateTime(); // current date
+$sitemap->addEntry('/page1', 0.8, 'weekly', $dateTime);
 
-for ($i = 0; $i < 8; $i++) {
-  $page = '/page' . ($i + 3);
-  $priority = rand(1, 10) / 10;
+// Create random dates
+for($i = 0; $i < 8; $i++) {
 
-  $sitemap->addEntry($page, $priority);
+  $dateTime = new DateTime("+$i days");  
+  $page = "/page$i";
+  
+  $sitemap->addEntry($page, 0.5, 'monthly', $dateTime);
 }
 
 // Generate
