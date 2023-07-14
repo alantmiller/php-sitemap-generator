@@ -120,7 +120,6 @@ private function _buildImageTags(Entry $entry) {
   $xml = '';
 
   foreach ($entry->getImages() as $image) {
-    
     $xml .= '<image:image>';
     $xml .=   '<image:loc>'. $image['loc'] .'</image:loc>';
     $xml .=   '<image:title>'. $image['title'] .'</image:title>';
@@ -129,7 +128,6 @@ private function _buildImageTags(Entry $entry) {
   }
 
   return $xml;
-
 }
 
 /**
@@ -147,9 +145,7 @@ private function _buildVideoTags(Entry $entry) {
     $xml .= '</video:video>';
 
   }
-
   return $xml;
-
 }
 
   private function _buildLoc(string $loc): string
