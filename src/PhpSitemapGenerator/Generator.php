@@ -102,14 +102,29 @@ class Generator
 
   private function _buildEntry(Entry $entry): string 
   {
-    $loc = $this->_buildLoc($entry->getLoc());
+    // Build entry XML
+  $xml = '<url>';
 
-    return '<url>'
-         . $this->_buildLine('loc', $loc)  
-         . $this->_buildLine('priority', $entry->getPriority())
-         . $this->_buildLine('changefreq', $entry->getChangefreq())
-         . $this->_buildLine('lastmod', $entry->getLastmod())
-         . '</url>';
+  $loc = $this->_buildLoc($entry->getLoc());
+  $xml .= $this->_buildLine('loc', $loc);
+  
+  $xml .= $this->_buildLine('lastmod', $entry->getLastmod());
+  $xml .= $this->_buildLine('changefreq', $entry->getChangefreq());
+  $xml .= $this->_buildLine('priority', $entry->getPriority());
+
+  // Add images
+  if ($entry->hasImages()) {
+    $xml .= $this->_buildImageTags($entry);
+  }
+
+  // Add videos
+  if ($entry->hasVideos()) { 
+    $xml .= $this->_buildVideoTags($entry);
+  }
+  
+  $xml .= '</url>';
+
+  return $xml;
   }
 
   /**
