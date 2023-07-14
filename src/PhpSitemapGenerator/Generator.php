@@ -1,9 +1,12 @@
 <?php
-// src/PhpSitemapGenerator/Generator.php
+namespace PhpSitemapGenerator;
 
-namespace PhpSitemapGenerator;  
-
-class Generator
+/**
+ * Class Generator
+ *
+ * @package PhpSitemapGenerator
+ */
+class Generator  
 {
     private $_conf;
     private $_blocks;
@@ -13,6 +16,36 @@ class Generator
     {
         $this->_conf = $conf;
     }
+
+    /**
+ * Get config
+ * 
+ * @return Config
+ */
+public function getConfig(): Config 
+{
+  return $this->_config;
+}
+
+/**
+ * Get XML
+ *
+ * @return string
+ */
+public function getXml(): string
+{
+  return $this->_xml;
+}
+
+/**
+ * Get blocks
+ *
+ * @return string
+ */
+public function getBlocks(): string
+{
+  return $this->_blocks;
+}
 
     /**
      * exists to maintain legacy interface,
