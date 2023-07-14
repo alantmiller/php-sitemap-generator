@@ -1,10 +1,9 @@
 <?php
-
-// src/PhpSitemapGenerator/Sitemap.php
+// src/PhpSitemapGenerator/Sitemap.php 
 
 namespace PhpSitemapGenerator;
 
-class Sitemap  
+class Sitemap
 {
 
     protected $conf;
