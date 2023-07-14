@@ -11,14 +11,13 @@ use alantmiller\PhpSitemapGenerator\Entry;
 use alantmiller\PhpSitemapGenerator\Generator;
 use alantmiller\PhpSitemapGenerator\Config;
 
-// Config
+// Create and populate config 
 $config = new Config();
+$config->setDomain('www.example.com');
+$config->setFilename('sitemap.xml');
 
 // Sitemap
 $sitemap = new Sitemap($config);
-
-// Set domain
-$sitemap->setDomain('www.example.com');
 
 // Add entries
 $sitemap->addEntry('/page1', '0.8');
