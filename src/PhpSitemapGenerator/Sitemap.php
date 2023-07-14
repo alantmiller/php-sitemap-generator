@@ -3,30 +3,32 @@
 
 namespace PhpSitemapGenerator;
 
-class Sitemap {
-{    
+class Sitemap  
+{
+
     protected $conf;
     protected $entries = array();
     
-    public function __construct() 
+    public function __construct()
     {
-        $this->conf = new Shared_Xml_Sitemap_Config();   
+        $this->conf = new Config();  
     }
     
-    public function addEntry($loc, $priority, $changefreq="", $lastmod='') 
+    public function addEntry($loc, $priority, $changefreq="", $lastmod='')
     {
-        $this->entries[] = new Shared_Xml_Sitemap_Entry($loc, $priority, $changefreq, $lastmod);   
+        $this->entries[] = new Entry($loc, $priority, $changefreq, $lastmod);  
     }
     
-    public function setDomain($domain) 
+    public function setDomain($domain)
     {
-        $this->conf->setDomain($domain); 
+        $this->conf->setDomain($domain);
     }
     
-    public function toString() 
+    public function toString()
     {
         $this->conf->setEntries($this->entries);
-        $generator = new Shared_Xml_Sitemap_Generator($this->conf);
+        $generator = new Generator($this->conf);
         return $generator->toString();
     }
+
 }
