@@ -31,8 +31,6 @@ $config->setFilename('sitemap.xml');
 // Sitemap
 $sitemap = new Sitemap($config);
 
-$dateTime = new DateTime(); // current date
-
 // Add entry with video  
 $video = [
   'thumbnail' => '/images/video1_thumbnail.jpg',
@@ -55,12 +53,15 @@ $images = [
   ]
 ];
 
+
 $entry = new Entry('/page1', 0.8);
 $entry->setImages($images);
 $sitemap->addEntry($entry);
 
+$dateTime = new DateTime(); // current date
+
 // Create random dates
-for($i = 0; $i < 8; $i++) {
+for($i = 1; $i < 8; $i++) {
 
   $dateTime = new DateTime("+$i days");  
   $page = "/page$i";
