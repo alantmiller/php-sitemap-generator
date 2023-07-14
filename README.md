@@ -34,6 +34,29 @@ $sitemap = new Sitemap($config);
 $dateTime = new DateTime(); // current date
 $sitemap->addEntry('/page1', 0.8, 'weekly', $dateTime);
 
+// Add entry with video  
+$video = [
+  'thumbnail' => '/images/video1_thumbnail.jpg',
+  'title' => 'Awesome Video'
+];
+
+$entry = new Entry('/video1', 0.9); 
+$entry->setVideos([$video]);
+
+$sitemap->addEntry($entry);
+
+// Add entry with images
+$images = [
+  [
+     'loc' => '/images/image1.jpg',
+     'title' => 'Image 1'
+  ],
+  [
+     'loc' => '/images/image2.jpg',
+     'title' => 'Image 2'
+  ]
+];
+
 // Create random dates
 for($i = 0; $i < 8; $i++) {
 
