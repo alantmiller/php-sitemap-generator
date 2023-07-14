@@ -177,6 +177,14 @@ private function _buildVideoTags(Entry $entry) {
     return "<$name>$content</$name>";
   }
 
+  public function hasImages() {
+    return !empty($this->images); 
+  }
+
+  public function hasVideos() {
+    return !empty($this->videos);
+  }
+
   private function _isUtf8(string $str): bool 
   {
     return preg_match('//u', $str); 
