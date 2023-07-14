@@ -1,5 +1,5 @@
 <?php
-namespace PhpSitemapGenerator;
+namespace alantmiller\PhpSitemapGenerator;
 
 class Entry
 {
