@@ -1,109 +1,185 @@
-<?php 
-// src/PhpSitemapGenerator/Config.php
+<?php
 
 namespace PhpSitemapGenerator;
 
-class Config
+/**
+ * Class Config
+ *
+ * @package PhpSitemapGenerator
+ */
+class Config 
 {
-    private $_domain;
-    private $_path;
-    private $_filename;
-    private $_entries = array();
-    private $_type;
+
+  private string $_domain;
+  private string $_path;
+  private string $_filename;
+  
+  private array $_entries = [];
+  
+  private string $_type;
+
+  /**
+   * Config constructor
+   *
+   * @param string $type
+   */
+  public function __construct(string $type = 'screen')
+  {
+    $this->_type = $type;
+  }
+
+  /**
+   * Get config value
+   *
+   * @param string $arg
+   *
+   * @return string|array
+   */
+  public function get(string $arg): string|array
+  {
+    switch ($arg) {
+      case 'domain':
+        return $this->_domain;
+      case 'path':
+        return $this->_path;
+      case 'filename':
+        return $this->_filename;
+      case 'filepath':
+        return $this->_getFilepath();
+      case 'entries':
+        return $this->_entries;
+    }
+  }
+
+  /**
+   * Set domain
+   *
+   * @param string $domain
+   *
+   * @return self
+   */
+  public function setDomain(string $domain): self
+  {
+    $this->_domain = trim($domain);
     
-    public function __construct($type = 'screen')
-    {
-        $this->_type = $type;
+    return $this;
+  }
+
+  /**
+   * Set path
+   *
+   * @param string $path
+   *
+   * @return self
+   */
+  public function setPath(string $path): self
+  {
+    // Validate and sanitize path
+    
+    $this->_path = $path;
+    
+    return $this;
+  }
+
+  /**
+   * Set filename
+   *
+   * @param string $filename
+   *
+   * @return self
+   */
+  public function setFilename(string $filename): self
+  {
+    // Validate filename
+    
+    $this->_filename = $filename;
+    
+    return $this;
+  }
+
+  /**
+   * Set entries
+   *
+   * @param Entry[] $entries
+   *
+   * @return self
+   * @throws \Exception
+   */
+  public function setEntries(array $entries): self
+  {
+    // Validate entries 
+    
+    $this->_entries = $entries;
+    
+    return $this;
+  }
+
+/**
+   * Validate configuration
+   *
+   * @throws \Exception
+   */
+  public function sanityCheck(): void
+  {
+    if ($this->_type === 'file' && empty($this->_filename)) {
+      throw new \Exception('Filename not set');
     }
-
-    public function get($arg)
-    {
-        switch ($arg) {
-            case 'domain':
-                return $this->_domain;
-            case 'path':
-                return $this->_path;
-            case 'filename':
-                return $this->_filename;
-            case 'filepath':
-                return $this->_getFilepath();
-            case 'entries':
-                return $this->_entries;
-        }
+    
+    if (empty($this->_domain)) {
+      throw new \Exception('Domain not set');
     }
+  }
 
-    public function setDomain($domain)
-    {
-        $this->_domain = trim($domain);
-        return $this;
-    }
+  /**
+   * Get domain
+   *
+   * @return string
+   */
+  public function getDomain(): string
+  {
+    return $this->_domain;
+  }
 
-    public function setPath($path)
-    {
-        $path = trim($path);
-        // clean trailing slash if exists
-        if (substr($path,-1) == '/') {
-            $path = substr($path, 0, -1);
-        }
+  /**
+   * Get entries
+   *
+   * @return Entry[]
+   */
+  public function getEntries(): array
+  {
+    return $this->_entries;
+  }
+    
+  /**
+   * Get path
+   * 
+   * @return string
+   */
+  public function getPath(): string
+  {
+    return $this->_path;
+  }
+    
+  /**
+   * Get file path
+   *
+   * @return string
+   */
+  private function _getFilepath(): string
+  {
+    return $this->_path . '/' . $this->_filename;
+  }
 
-        // check if write directory is valid
-        if (!is_dir($path)) {
-            exit(sprintf('write directory does not exist: %s'."\n",$path));
-        }
+    
+  /**
+   * Get filename
+   *
+   * @return string
+   */
+  public function getFilename(): string
+  {
+    return $this->_filename;
+  }
 
-        // check if write dir is writable
-        if (!is_writable($path)) {
-            exit(sprintf('write directory not writable: %s'."\n", $path));
-        }
 
-        $this->_path = $path;
-        return $this;
-    }
-
-    public function setFilename($filename)
-    {
-        $filename = trim($filename);
-        if (strtolower(substr($filename,-3)) != 'xml') {
-            exit(sprintf('filename must end with: xml: %s'."\n", $filename));
-        }
-
-        // remove leading slash if exists
-        if (substr($filename, 0, 1) == '/') {
-            $filename = substr($filename, 1, 0);
-        }
-
-        $this->_filename = $filename;
-        return $this;
-    }
-
-    public function setEntries($entries)
-    {
-        if (!is_array($entries)) {
-            throw new exception('setEntries() method expecs an array of objects');
-        }
-
-        foreach ($entries AS $entry) {
-            if (!is_object($entry) || !get_class($entry) == 'Entry') {
-                throw new exception('setEntries() method expects an aray of Entry objects');
-            }
-        }
-        $this->_entries = $entries;
-        return $this;
-    }
-
-    public function sanityCheck()
-    {
-        if ($this->_type == 'file' && !strlen($this->_filename) > 0) {
-            exit('Error: sitemap filename not set in configuration object');
-        }
-
-        if (!strlen($this->_domain) > 0) {
-            exit('Error: domain not set in configuration object');
-        }
-    }
-
-    private function _getFilepath()
-    {
-        return sprintf('%s/%s',$this->_path, $this->_filename);
-    }
 }
