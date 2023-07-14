@@ -1,6 +1,9 @@
 <?php 
+// src/PhpSitemapGenerator/Entry.php
 
-class Shared_Xml_Sitemap_Entry
+namespace PhpSitemapGenerator;
+
+class Entry {
 {
     private $_loc;
     private $_priority;
