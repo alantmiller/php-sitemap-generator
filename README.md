@@ -13,7 +13,19 @@ use alantmiller\PhpSitemapGenerator\Config;
 
 // Create and populate config 
 $config = new Config();
-$config->setDomain('www.example.com');
+
+// Domain regex allows alphanumeric, dashes, dot 
+$domainRegex = '/^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/';
+$domain = 'www.example.com';
+
+if (preg_match($domainRegex, $domain)) {
+  // Valid domain, use it
+  $config->setDomain($domain);
+} else {
+  // Invalid domain, throw error
+  throw new Exception('Invalid domain format');
+}
+
 $config->setFilename('sitemap.xml');
 
 // Sitemap
