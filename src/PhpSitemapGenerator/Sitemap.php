@@ -1,5 +1,9 @@
 <?php 
-class Shared_Xml_Sitemap 
+// src/PhpSitemapGenerator/Sitemap.php
+
+namespace PhpSitemapGenerator;
+
+class Sitemap {
 {    
     protected $conf;
     protected $entries = array();
