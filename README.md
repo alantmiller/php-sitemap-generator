@@ -8,9 +8,14 @@ require 'vendor/autoload.php';
 
 use alantmiller\PhpSitemapGenerator\Sitemap;
 use alantmiller\PhpSitemapGenerator\Entry;
+use alantmiller\PhpSitemapGenerator\Generator;
+use alantmiller\PhpSitemapGenerator\Config;
 
-// Create sitemap
-$sitemap = new Sitemap();
+// Config
+$config = new Config();
+
+// Sitemap
+$sitemap = new Sitemap($config);
 
 // Set domain
 $sitemap->setDomain('www.example.com');
@@ -26,10 +31,10 @@ for ($i = 0; $i < 8; $i++) {
   $sitemap->addEntry($page, $priority);
 }
 
-// Generate XML sitemap
-$xmlSitemap = $sitemap->toString();
+// Generate
+$generator = new Generator($config);
+$xmlSitemap = $generator->toString();
 
 // Output sitemap
-header('Content-Type: text/xml');
 echo $xmlSitemap;
 ```
