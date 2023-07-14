@@ -1,5 +1,4 @@
 <?php
-
 namespace PhpSitemapGenerator;
 
 class Entry
