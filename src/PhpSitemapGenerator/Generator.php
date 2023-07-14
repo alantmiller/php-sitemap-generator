@@ -24,7 +24,11 @@
  * $generator->write(); // or $generator->toString();
  *
  */
-class Shared_Xml_Sitemap_Generator
+// src/PhpSitemapGenerator/Generator.php
+
+namespace PhpSitemapGenerator;
+
+class Generator {
 {
     private $_conf;
     private $_blocks;
