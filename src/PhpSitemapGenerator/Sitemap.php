@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 // src/PhpSitemapGenerator/Sitemap.php
 
 namespace PhpSitemapGenerator;
@@ -11,17 +12,17 @@ class Sitemap
     
     public function __construct()
     {
-        $this->conf = new Config();  
+        $this->conf = new Config();   
     }
     
     public function addEntry($loc, $priority, $changefreq="", $lastmod='')
     {
-        $this->entries[] = new Entry($loc, $priority, $changefreq, $lastmod);  
+        $this->entries[] = new Entry($loc, $priority, $changefreq, $lastmod);   
     }
     
     public function setDomain($domain)
     {
-        $this->conf->setDomain($domain);
+        $this->conf->setDomain($domain); 
     }
     
     public function toString()
