@@ -1,0 +1,19 @@
+{
+    "name": "alantmiller/php-sitemap-generator",
+    "description": "PHP sitemap generator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alan Miller",
+            "email": "alan@alanmiller.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sitemap\\": "src/"
+        }
+    }
+}
