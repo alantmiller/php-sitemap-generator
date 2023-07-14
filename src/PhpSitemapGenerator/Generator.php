@@ -1,40 +1,15 @@
 <?php
-/**
-* @author Alan T. Miller <alan@alanmiller.com>
-* @copyright Copyright (C) 2010, Alan T Miller, All Rights Reserved.
- *
- * Creates a properly formatted XML sitemap
- *
- * Sample Usage:
- *
- * // Create an array of xml_sitemap_entry objects
- * $entries[] = new xml_sitemap_entry('/', '1.00', 'weekly');
- * $entries[] = new xml_sitemap_entry('/somepage.html', '0.95', 'weekly');
- * $entries[] = new xml_sitemap_entry('/otherpage.html', '0.90', 'monthly');
- *
- * // set up the xml generator config object
- * $conf = new xml_sitemap_generator_config();
- * $conf->setDomain('www.somedomainsomewhere.com');
- * $conf->setPath('/var/tmp/');
- * $conf->setFilename('sitemap.xml');
- * $conf->setEntries($entries);
- *
- * // instantiate and execute
- * $generator = new xml_sitemap_generator($conf);
- * $generator->write(); // or $generator->toString();
- *
- */
 // src/PhpSitemapGenerator/Generator.php
 
-namespace PhpSitemapGenerator;
+namespace PhpSitemapGenerator;  
 
-class Generator {
+class Generator
 {
     private $_conf;
     private $_blocks;
     private $_xml;
 
-    public function __construct(Shared_Xml_Sitemap_Config $conf)
+    public function __construct(Config $conf)  
     {
         $this->_conf = $conf;
     }
@@ -114,7 +89,7 @@ class Generator {
         return $this->_blocks;
     }
 
-    private function _buildEntry(Shared_Xml_Sitemap_Entry $entry)
+    private function _buildEntry(Entry $entry)
     {
         $loc = sprintf("http://%s%s",
                        $this->_conf->get('domain'),$entry->get('loc'));
