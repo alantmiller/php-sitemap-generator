@@ -80,7 +80,7 @@ class Generator
   private function _buildHeader(): string
   {
     $header = '<?xml version="1.0" encoding="UTF-8"?>';
-    $header .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+    $header .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/1.1">';
     return $header;
   }
 
