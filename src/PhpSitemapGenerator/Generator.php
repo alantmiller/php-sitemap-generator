@@ -112,6 +112,46 @@ class Generator
          . '</url>';
   }
 
+  /**
+ * Build image tags XML
+ */
+private function _buildImageTags(Entry $entry) {
+
+  $xml = '';
+
+  foreach ($entry->getImages() as $image) {
+    
+    $xml .= '<image:image>';
+    $xml .=   '<image:loc>'. $image['loc'] .'</image:loc>';
+    $xml .=   '<image:title>'. $image['title'] .'</image:title>';
+    $xml .= '</image:image>';
+
+  }
+
+  return $xml;
+
+}
+
+/**
+ * Build video tags XML
+ */ 
+private function _buildVideoTags(Entry $entry) {
+
+  $xml = '';
+
+  foreach ($entry->getVideos() as $video) {
+
+    $xml .= '<video:video>';
+    $xml .=   '<video:thumbnail_loc>'. $video['thumbnail'] .'</video:thumbnail_loc>';
+    $xml .=   '<video:title>'. $video['title'] .'</video:title>';
+    $xml .= '</video:video>';
+
+  }
+
+  return $xml;
+
+}
+
   private function _buildLoc(string $loc): string
   {
     return 'http://' . $this->_config->getDomain() . $loc;
