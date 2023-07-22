@@ -72,8 +72,8 @@ for($i = 1; $i < 8; $i++) {
 
 // Generate
 $generator = new Generator($config);
-$xmlSitemap = $generator->toString();
+$sitemap = $generator->toString();
 
 // Output sitemap
-echo $xmlSitemap;
+echo $sitemap;
 ```
