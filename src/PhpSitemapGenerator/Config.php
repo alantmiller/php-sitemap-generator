@@ -2,16 +2,14 @@
 
 namespace alantmiller\PhpSitemapGenerator;
 
-class Config  
+class Config
 {
 
   // Properties
   private string $_domain;
-  private string $_path; 
+  private string $_path;
   private string $_filename;
-  
   private array $_entries = [];
-  
   private string $_type;
 
   // Constructor
